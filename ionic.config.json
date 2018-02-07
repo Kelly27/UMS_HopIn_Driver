@@ -1,6 +1,6 @@
 {
   "name": "UMS_HopIn_Driver",
-  "app_id": "",
+  "app_id": "com.umshopin_driver.starter",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

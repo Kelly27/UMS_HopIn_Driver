@@ -3,7 +3,8 @@ import { Injectable, NgZone } from '@angular/core';
 import 'rxjs/add/operator/filter';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
-
+import { Http, Headers, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 /*
   Generated class for the LocationTrackerProvider provider.
 
@@ -16,11 +17,13 @@ export class LocationTrackerProvider {
     public watch: any;
     public lat: number = 0;
     public lng: number = 0;
+    public sendData: any;
 
     constructor(
         public zone: NgZone,
         public backgroundGeolocation: BackgroundGeolocation,
-        public geolocation: Geolocation
+        public geolocation: Geolocation,
+        public http: Http
         ) {
         console.log('Hello LocationTrackerProvider Provider');
     }
@@ -64,6 +67,8 @@ export class LocationTrackerProvider {
                 this.lng = position.coords.longitude;
             });
         });
+
+        this.updateLocation();
     }
 
     stopTracking(){
@@ -73,4 +78,36 @@ export class LocationTrackerProvider {
         this.watch.unsubscribe();
     }
 
+    updateLocation(){
+        let location = {
+            lat: this.lat,
+            lng: this.lng
+        };
+
+        let bus_location = {
+            bus_location : JSON.stringify(location)
+        } //when send data using post request, the data variable must same as the datatable column name
+
+        // let body = {
+        //     message: "Do you hear me?"
+        // };
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return new Promise(resolve => {
+            this.http.post('http://umshopin.com/umshopin_admin/api/bus/1/updateLocation', JSON.stringify(bus_location), {headers: headers})
+            // .map(this.extractData)
+            .subscribe(data => {
+                resolve(data);
+                console.log('succes: ' , data);
+            }, (err) => {
+                resolve(true);
+                console.log('failed: ' + err);
+            });
+        })
+    }
+
+    // private extractData(res: Response) {
+    //     return res.text() ? res.json() : {}; ;
+    // }
 }
