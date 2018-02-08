@@ -17,7 +17,6 @@ export class LocationTrackerProvider {
     public watch: any;
     public lat: number = 0;
     public lng: number = 0;
-    public sendData: any;
 
     constructor(
         public zone: NgZone,
@@ -45,6 +44,7 @@ export class LocationTrackerProvider {
                 this.lat = location.latitude;
                 this.lng = location.longitude;
             });
+            // this.updateLocation();
         }, (err) => {
             console.log(err);
         });
@@ -61,14 +61,15 @@ export class LocationTrackerProvider {
         this.watch = this.geolocation.watchPosition(options).filter((p: any) => p.code === undefined).subscribe((position: Geoposition) => {
             console.log(position);
 
-            //Run update inside of Angular's zibe
+            //Run update inside of Angular's zone
             this.zone.run(() => {
                 this.lat = position.coords.latitude;
                 this.lng = position.coords.longitude;
             });
+            this.updateLocation();
         });
 
-        this.updateLocation();
+        // this.updateLocation();
     }
 
     stopTracking(){
