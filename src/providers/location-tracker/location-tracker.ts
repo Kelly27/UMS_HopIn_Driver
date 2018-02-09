@@ -68,13 +68,12 @@ export class LocationTrackerProvider {
             });
             this.updateLocation();
         });
-
-        // this.updateLocation();
     }
 
     stopTracking(){
         console.log('stopTracking');
 
+        this.stopUpdateLoc();
         this.backgroundGeolocation.finish();
         this.watch.unsubscribe();
     }
@@ -85,7 +84,8 @@ export class LocationTrackerProvider {
             lng: this.lng
         };
 
-        let bus_location = {
+        let data = {
+            track_status : 'ON',
             bus_location : JSON.stringify(location)
         } //when send data using post request, the data variable must same as the datatable column name
 
@@ -96,14 +96,15 @@ export class LocationTrackerProvider {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         return new Promise(resolve => {
-            this.http.post('http://umshopin.com/umshopin_admin/api/bus/1/updateLocation', JSON.stringify(bus_location), {headers: headers})
+            this.http.post('http://umshopin.com/umshopin_admin/api/bus/1/updateLocation', JSON.stringify(data), {headers: headers})
             // .map(this.extractData)
             .subscribe(data => {
                 resolve(data);
                 console.log('succes: ' , data);
             }, (err) => {
                 resolve(true);
-                console.log('failed: ' + err);
+                alert('failed: ' + err);
+                window.location.reload();
             });
         })
     }
@@ -111,4 +112,25 @@ export class LocationTrackerProvider {
     // private extractData(res: Response) {
     //     return res.text() ? res.json() : {}; ;
     // }
+    //
+    stopUpdateLoc(){
+        let data = {
+            track_status: 'OFF',
+            bus_location : null
+        }
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return new Promise(resolve => {
+            this.http.post('http://umshopin.com/umshopin_admin/api/bus/1/updateLocation', JSON.stringify(data), {headers: headers})
+            .subscribe(data => {
+                resolve(data);
+                console.log('success', data);
+            }, (err) => {
+                resolve(true);
+                alert('failed' + err);
+                window.location.reload();
+            })
+        })
+    }
 }
