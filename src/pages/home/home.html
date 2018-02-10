@@ -1,12 +1,13 @@
 <ion-header>
     <ion-navbar color="primary">
         <ion-title>
-          Location Tracker
+            <img id="logo" src="../assets/imgs/header.png">
       </ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+    <p>Good day, {{driver.name}}</p>
     <h3>Current Latitude: {{locationTracker.lat}}</h3>
     <h3>Current Longitude: {{locationTracker.lng}}</h3>
     <button ion-button full primary (click)="start()">Start Tracking</button>

@@ -3,12 +3,6 @@ import { IonicPage, NavController, NavParams, LoadingController, ToastController
 
 import { TabsPage } from '../tabs/tabs';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -21,39 +15,32 @@ export class LoginPage {
     loginData = { staff_number:'', password:'' };
     data: any;
     hasToken: boolean = false;
+    rmbMeIsTrue: boolean = false;
 
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
         public authService: AuthServiceProvider,
         public loadingCtrl: LoadingController,
-        public toastCtrl: ToastController
+        public toastCtrl: ToastController,
     ) {
     }
 
     ionViewDidLoad() {
-        console.log('ionViewDidLoad LoginPage');
-        console.log('locast', localStorage);
-        this.checkToken();
-        console.log(this.hasToken);
-        if(this.hasToken){ //if local storage has token, keep user logged in
-            this.navCtrl.setRoot(TabsPage);
-        }
-        // else{ //else, do login
-        //     // this.doLogin();
-        // }
     }
 
     doLogin(){
         this.showLoader();
         this.authService.login(this.loginData).then((result) => {
             this.data = result;
-            console.log('this.data', result);
             if(this.data.result != false){
                 this.loading.dismiss();
                 this.data = result;
-                localStorage.setItem('token', this.data.result);
-                console.log('localstorage', localStorage);
+                if(this.rmbMeIsTrue == true){
+                    this.authService.rememberToken(this.rmbMeIsTrue);
+                    localStorage.setItem('token', this.data.result);
+                    localStorage.setItem('driver', JSON.stringify(this.authService.driver));
+                }
                 this.navCtrl.setRoot(TabsPage);
             }
             else{
@@ -86,13 +73,8 @@ export class LoginPage {
         toast.present();
     }
 
-    checkToken(){
-        if(localStorage.token == null|| localStorage.token == false){
-            this.hasToken = false;
-        }
-        else{
-            this.hasToken = true;
-        }
+    toggleRmbMe(){
+        this.rmbMeIsTrue = !this.rmbMeIsTrue;
     }
 
 }

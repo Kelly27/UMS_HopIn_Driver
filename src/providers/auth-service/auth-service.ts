@@ -16,6 +16,7 @@ let apiUrl = 'http://umshopin.com/umshopin_admin/api/driver_login';
 export class AuthServiceProvider {
 
     public driver: any;
+    public rmbToken:boolean;
 
     constructor(public http: Http) {
         console.log('Hello AuthServiceProvider Provider');
@@ -28,17 +29,26 @@ export class AuthServiceProvider {
 
             this.http.post(apiUrl, JSON.stringify(credentials), {headers: headers}).subscribe(res => {
                 resolve(res.json());
+                this.driver =  res.json().driver;
+                console.log('auth', this.driver);
             }, (err) => {
-                reject(err);
+                console.log('Something is wrong!', err);
             });
         });
     }
 
     logout(){
         localStorage.removeItem('token');
+        localStorage.removeItem('driver');
+        localStorage.removeItem('rmbToken');
+        console.log('logout', localStorage);
     }
 
-    getDriverData(){
-
+    rememberToken(flag){
+        this.rmbToken = flag;
+        if(this.rmbToken){
+            localStorage.setItem('rmbToken', flag);
+            console.log('auth localStorage', localStorage);
+        }
     }
 }
