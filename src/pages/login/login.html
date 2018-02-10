@@ -6,24 +6,40 @@
 -->
 <ion-header>
 
-    <ion-navbar>
-        <ion-title>login</ion-title>
+    <ion-navbar color="primary" style="text-align: center">
+        <ion-title >UMS HopIn! Driver</ion-title>
+        <ion-grid>
+            <ion-row>
+                <ion-col col-7>
+                    <img src='../assets/imgs/umslogo.png'>
+                </ion-col>
+                <ion-col col-5>
+                    <img src="../assets/imgs/logo.png" style="max-height: 60px;">
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-    <h2>Please, Login</h2>
+
+    <h2>PLEASE LOGIN</h2>
     <form (submit)="doLogin()">
         <ion-item>
-            <ion-label stacked>Staff Number</ion-label>
-            <ion-input [(ngModel)]="loginData.staff_number" name="staff_number" type="text" placeholder="Staff Number" ></ion-input>
+            <ion-label>Staff Number</ion-label>
+            <ion-input [(ngModel)]="loginData.staff_number" name="staff_number" type="text"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label stacked>Password</ion-label>
-            <ion-input [(ngModel)]="loginData.password" name="password" type="password" placeholder="Password"></ion-input>
+            <ion-label>Password</ion-label>
+            <ion-input [(ngModel)]="loginData.password" name="password" type="password"></ion-input>
         </ion-item>
+        <ion-item>
+            <ion-label>Remember Me</ion-label>
+            <ion-checkbox color="dark"></ion-checkbox>
+        </ion-item>
+        <br>
         <button ion-button block type="submit">
             Login
         </button>

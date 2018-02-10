@@ -8,6 +8,10 @@ import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
+import { TabsPage } from '../pages/tabs/tabs';
+import { ReportPage } from '../pages/report/report';
+import { OthersPage } from '../pages/others/others';
+
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
@@ -17,7 +21,10 @@ import { Geolocation } from '@ionic-native/geolocation';
   declarations: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    TabsPage,
+    ReportPage,
+    OthersPage
   ],
   imports: [
     BrowserModule,
@@ -28,7 +35,10 @@ import { Geolocation } from '@ionic-native/geolocation';
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    TabsPage,
+    ReportPage,
+    OthersPage
   ],
   providers: [
     StatusBar,

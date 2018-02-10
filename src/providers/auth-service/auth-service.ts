@@ -15,9 +15,11 @@ let apiUrl = 'http://umshopin.com/umshopin_admin/api/driver_login';
 @Injectable()
 export class AuthServiceProvider {
 
-  constructor(public http: Http) {
-    console.log('Hello AuthServiceProvider Provider');
-  }
+    public driver: any;
+
+    constructor(public http: Http) {
+        console.log('Hello AuthServiceProvider Provider');
+    }
 
     login(credentials) {
         return new Promise((resolve, reject) => {
@@ -33,15 +35,10 @@ export class AuthServiceProvider {
     }
 
     logout(){
-        return new Promise((resolve, reject) => {
-            let headers = new Headers();
-            headers.append('X-Auth-Token', localStorage.getItem('token'));
+        localStorage.removeItem('token');
+    }
 
-            this.http.post(apiUrl+'logout', {}, {headers: headers}).subscribe(res => {
-                localStorage.clear();
-            }, (err) => {
-                reject(err);
-            });
-        });
+    getDriverData(){
+
     }
 }
