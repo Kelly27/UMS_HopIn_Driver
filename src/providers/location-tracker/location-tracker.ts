@@ -43,8 +43,8 @@ export class LocationTrackerProvider {
             this.zone.run(() => {
                 this.lat = location.latitude;
                 this.lng = location.longitude;
+                this.updateLocation();
             });
-            // this.updateLocation();
         }, (err) => {
             console.log(err);
         });
@@ -65,8 +65,8 @@ export class LocationTrackerProvider {
             this.zone.run(() => {
                 this.lat = position.coords.latitude;
                 this.lng = position.coords.longitude;
+                this.updateLocation();
             });
-            this.updateLocation();
         });
     }
 
