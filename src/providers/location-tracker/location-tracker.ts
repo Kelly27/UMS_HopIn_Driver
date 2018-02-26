@@ -33,7 +33,7 @@ export class LocationTrackerProvider {
             stationaryRadius: 20,
             distanceFilter: 10,
             debug: true,
-            interval: 2000
+            interval: 500
         }
 
         this.backgroundGeolocation.configure(config).subscribe((location) => {
@@ -118,6 +118,9 @@ export class LocationTrackerProvider {
             track_status: 'OFF',
             bus_location : null
         }
+
+        this.lat = 0;
+        this.lng = 0;
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
