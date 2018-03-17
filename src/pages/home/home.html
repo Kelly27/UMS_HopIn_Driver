@@ -7,9 +7,11 @@
 </ion-header>
 
 <ion-content padding>
-    <p>Good day, {{driver.name}}</p>
+    <h3>Good day, {{driver.name}}</h3>
+    <h3>Your route today: {{route_name}}</h3>
     <h3>Current Latitude: {{locationTracker.lat}}</h3>
     <h3>Current Longitude: {{locationTracker.lng}}</h3>
     <button ion-button full primary (click)="start()">Start Tracking</button>
     <button ion-button full primary (click)="stop()">Stop Tracking</button>
+    <h3>Next Stop: {{next_stop.name}}</h3>
 </ion-content>

@@ -16,6 +16,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { Geolocation } from '@ionic-native/geolocation';
+import { BusInfoProvider } from '../providers/bus-info/bus-info';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     LocationTrackerProvider,
     BackgroundGeolocation,
     Geolocation,
+    BusInfoProvider,
   ]
 })
 export class AppModule {}

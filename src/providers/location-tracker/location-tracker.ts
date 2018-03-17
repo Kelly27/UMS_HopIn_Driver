@@ -17,6 +17,8 @@ export class LocationTrackerProvider {
     public watch: any;
     public lat: number = 0;
     public lng: number = 0;
+    public bus_stop_arr:any;
+    public nextStop: any;
 
     constructor(
         public zone: NgZone,
@@ -66,6 +68,7 @@ export class LocationTrackerProvider {
                 this.lat = position.coords.latitude;
                 this.lng = position.coords.longitude;
                 this.updateLocation();
+                this.nearBusStop(this.nextStop);
             });
         });
     }
@@ -86,12 +89,11 @@ export class LocationTrackerProvider {
 
         let data = {
             track_status : 'ON',
-            bus_location : JSON.stringify(location)
+            bus_location : JSON.stringify(location),
+            next_stop: JSON.stringify(this.nextStop)
         } //when send data using post request, the data variable must same as the datatable column name
 
-        // let body = {
-        //     message: "Do you hear me?"
-        // };
+        console.log('data', data);
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -116,7 +118,8 @@ export class LocationTrackerProvider {
     stopUpdateLoc(){
         let data = {
             track_status: 'OFF',
-            bus_location : null
+            bus_location : null,
+            next_stop: null
         }
 
         this.lat = 0;
@@ -135,5 +138,42 @@ export class LocationTrackerProvider {
                 window.location.reload();
             })
         })
+    }
+
+    setBusStopArr(bus_stop_arr){
+        this.bus_stop_arr = bus_stop_arr;
+        this.nextStop = this.bus_stop_arr[0];
+    }
+
+    setNextStop(currentStop){
+        let i = this.bus_stop_arr.indexOf(currentStop);
+        console.log(i);
+        if(this.bus_stop_arr[i + 1]){
+            this.nextStop = this.bus_stop_arr[i + 1];
+        }
+        else{
+            console.log('end of route');
+        }
+    }
+
+    nearBusStop(nextStop){
+        console.log('next', nextStop);
+        let isNear:boolean = false;
+        let location = nextStop.location;
+        if(this.lat < location.lat + 0.0001 && this.lat > location.lat - 0.0001){
+            if(this.lng < location.lng + 0.0001 && this.lng > location.lng - 0.0001){
+                console.log('it is near!');
+                isNear = true;
+                let currentStop = nextStop;
+                this.setNextStop(currentStop);
+            }
+            else{
+                console.log('lng not reach yet', this.lng);
+            }
+        }
+        else{
+            console.log('lat not reach yet', this.lat);
+            isNear = false;
+        }
     }
 }
