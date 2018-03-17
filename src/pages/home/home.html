@@ -7,11 +7,23 @@
 </ion-header>
 
 <ion-content padding>
-    <h3>Good day, {{driver.name}}</h3>
-    <h3>Your route today: {{route_name}}</h3>
-    <h3>Current Latitude: {{locationTracker.lat}}</h3>
-    <h3>Current Longitude: {{locationTracker.lng}}</h3>
-    <button ion-button full primary (click)="start()">Start Tracking</button>
-    <button ion-button full primary (click)="stop()">Stop Tracking</button>
-    <h3>Next Stop: {{next_stop.name}}</h3>
+    <ion-card>
+        <p>Good day, {{driver.name}}</p>
+    </ion-card>
+
+    <ion-card>
+        <p>Your route today: {{route_name}}</p>
+    </ion-card>
+
+    <ion-card text-center>
+        <p>Current Latitude: {{locationTracker.lat}}</p>
+        <p>Current Longitude: {{locationTracker.lng}}</p>
+        <p>Start Tracking:</p>
+        <ion-toggle class="tracking-toggle" text-center [(ngModel)]="trackingToggle" color="secondary" (ionChange)="checkTrackingSwitch()"></ion-toggle>
+    </ion-card>
+
+    <ion-card text-center>
+        <p>Next Stop: {{next_stop.name}}</p>
+        <button ion-button round color="danger" (click)="changeStop()">CHANGE NEXT STOP</button>
+    </ion-card>
 </ion-content>

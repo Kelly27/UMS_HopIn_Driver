@@ -15,7 +15,10 @@ export class BusInfoProvider {
 
     constructor(public http: Http) {
         console.log('Hello BusInfoProvider Provider');
-        this.driver = JSON.parse(localStorage.getItem('driver'));
+    }
+
+    setDriver(driver){
+        this.driver = driver;
     }
 
     getAssignedBus(){

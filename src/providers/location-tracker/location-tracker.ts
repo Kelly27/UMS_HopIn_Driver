@@ -4,6 +4,7 @@ import 'rxjs/add/operator/filter';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { Http, Headers, Response } from '@angular/http';
+import { AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 /*
   Generated class for the LocationTrackerProvider provider.
@@ -24,7 +25,8 @@ export class LocationTrackerProvider {
         public zone: NgZone,
         public backgroundGeolocation: BackgroundGeolocation,
         public geolocation: Geolocation,
-        public http: Http
+        public http: Http,
+        private alertCtrl: AlertController
         ) {
         console.log('Hello LocationTrackerProvider Provider');
     }
@@ -152,8 +154,15 @@ export class LocationTrackerProvider {
             this.nextStop = this.bus_stop_arr[i + 1];
         }
         else{
+            this.stopTracking(); //pause tracking
+            this.presentEndRouteAlert();
             console.log('end of route');
+
         }
+    }
+
+    changeNextStop(stop){
+        this.nextStop = stop;
     }
 
     nearBusStop(nextStop){
@@ -175,5 +184,28 @@ export class LocationTrackerProvider {
             console.log('lat not reach yet', this.lat);
             isNear = false;
         }
+    }
+
+    presentEndRouteAlert(){
+        let alert = this.alertCtrl.create({
+            title: 'End of Route',
+            message: "You have reached the last bus stop on this route. Do you want to stop sending your location to the server?",
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                        this.startTracking();
+                    }
+                },
+                {
+                    text: 'OK',
+                    handler: () => {
+                        this.stopTracking();
+                    }
+                }
+            ]
+        });
+        alert.present();
     }
 }
