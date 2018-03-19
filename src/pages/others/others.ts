@@ -3,8 +3,13 @@ import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { LoginPage } from '../login/login';
 import { BusInfoProvider } from '../../providers/bus-info/bus-info';
-/**
- * Generated class for the OthersPage page.
+// import { 
+//   TimelineComponent, 
+//   TimelineItemComponent, 
+//   TimelineTimeComponent 
+// } from '../../components/timeline/timeline';
+
+/* Generated class for the OthersPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.

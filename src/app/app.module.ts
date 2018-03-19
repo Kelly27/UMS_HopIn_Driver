@@ -18,6 +18,12 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { Geolocation } from '@ionic-native/geolocation';
 import { BusInfoProvider } from '../providers/bus-info/bus-info';
 
+import { 
+  TimelineComponent, 
+  TimelineItemComponent, 
+  TimelineTimeComponent 
+} from '../components/timeline/timeline';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -25,7 +31,11 @@ import { BusInfoProvider } from '../providers/bus-info/bus-info';
     LoginPage,
     TabsPage,
     ReportPage,
-    OthersPage
+    OthersPage,
+
+    TimelineComponent,
+    TimelineItemComponent,
+    TimelineTimeComponent
   ],
   imports: [
     BrowserModule,
