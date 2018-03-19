@@ -14,9 +14,11 @@
 
 
 <ion-content padding>
-<button ion-button block (click) = logout()>Logout</button>
-<p>stops:</p>
-<ul *ngFor="let route of routeArr">
-    <li>{{route.name}}</li>
-</ul>
+    <ion-card>
+        <p>stops:</p>
+        <ul *ngFor="let route of routeArr">
+            <li>{{route.name}}</li>
+        </ul>
+    </ion-card>
+    <button ion-button block (click) = logout()>Logout</button>
 </ion-content>

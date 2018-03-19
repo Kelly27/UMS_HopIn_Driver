@@ -22,6 +22,7 @@ export class BusInfoProvider {
     }
 
     getAssignedBus(){
+      console.log(this.driver.id);
         return this.http.get('http://umshopin.com/umshopin_admin/api/driver/' + this.driver.id + '/getAssignedInfo')
         .map(response => response.json());
     }
