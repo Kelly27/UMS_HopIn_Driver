@@ -20,9 +20,11 @@ export class HomePage {
 
     public assignedBus:any;
     public assignedRoute: any;
-    public bus_stop_arr:any; 
+    public bus_stop_arr:any;
 
     public trackingToggle:boolean = false;
+    public busIsFullToggle:boolean = false;
+    public disableIsFull: boolean = true;
 
     constructor(
         public navCtrl: NavController,
@@ -44,9 +46,12 @@ export class HomePage {
     checkTrackingSwitch(){
         if(this.trackingToggle == true ){
             this.locationTracker.startTracking();
+            this.disableIsFull = false;
         }
         else{
             this.locationTracker.stopTracking();
+            this.disableIsFull = true;
+            this.locationTracker.isFull = false
         }
     }
 
@@ -116,5 +121,14 @@ export class HomePage {
         })
 
         alr.present();
+    }
+
+    busIsFullSwitch(){
+        if(this.busIsFullToggle == true){
+            this.locationTracker.isFull = true;
+        }
+        else{
+            this.locationTracker.isFull = false
+        }
     }
 }

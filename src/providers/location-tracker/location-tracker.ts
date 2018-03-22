@@ -20,6 +20,7 @@ export class LocationTrackerProvider {
     public lng: number = 0;
     public bus_stop_arr:any;
     public nextStop: any;
+    public isFull:boolean = false;
 
     public driver:any;
 
@@ -83,6 +84,7 @@ export class LocationTrackerProvider {
     stopTracking(){
         console.log('stopTracking');
 
+        this.isFull = false;
         this.stopUpdateLoc();
         this.backgroundGeolocation.finish();
         this.watch.unsubscribe();
@@ -96,7 +98,8 @@ export class LocationTrackerProvider {
 
         let data = {
             bus_location : JSON.stringify(location),
-            next_stop: JSON.stringify(this.nextStop)
+            next_stop: JSON.stringify(this.nextStop),
+            isFull: this.isFull
         } //when send data using post request, the data variable must same as the datatable column name
 
         // console.log('data', data);
@@ -120,7 +123,8 @@ export class LocationTrackerProvider {
     stopUpdateLoc(){
         let data = {
             bus_location : null,
-            next_stop: null
+            next_stop: null,
+            isFull: this.isFull
         }
 
         this.lat = 0;

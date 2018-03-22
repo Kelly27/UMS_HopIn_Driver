@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-card>
+    <ion-card text-center>
         <p>Good day, {{driver.name}}</p>
     </ion-card>
 
@@ -17,8 +17,8 @@
     </ion-card>
 
     <ion-card text-center>
-        <p>Current Latitude: {{locationTracker.lat}}</p>
-        <p>Current Longitude: {{locationTracker.lng}}</p>
+        <p style="font-size: 10px !important;">Current Latitude: {{locationTracker.lat}}</p>
+        <p style="font-size: 10px !important;">Current Longitude: {{locationTracker.lng}}</p>
         <p>Start Tracking:</p>
         <ion-toggle class="tracking-toggle" text-center [(ngModel)]="trackingToggle" color="secondary" (ionChange)="checkTrackingSwitch()"></ion-toggle>
     </ion-card>
@@ -30,5 +30,6 @@
 
     <ion-card text-center>
         <p>Bus Condition: </p>
+        <ion-toggle class="tracking-toggle" disabled = "{{disableIsFull}}" text-center [(ngModel)]="busIsFullToggle" color="danger" (ionChange)="busIsFullSwitch()"></ion-toggle>
     </ion-card>
 </ion-content>
