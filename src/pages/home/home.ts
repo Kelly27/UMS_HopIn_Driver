@@ -16,6 +16,7 @@ export class HomePage {
     public driver:any;
 
     public next_stop = [];
+    public route_name = '';
 
     public assignedBus:any;
     public assignedRoute: any;
@@ -32,6 +33,7 @@ export class HomePage {
     ){
         this.setDriver();
         this.busInfoProvider.setDriver(this.driver);
+        this.locationTracker.setDriver(this.driver);
     }
 
     ionViewDidLoad() {
@@ -47,12 +49,6 @@ export class HomePage {
             this.locationTracker.stopTracking();
         }
     }
-    // start(){
-    // }
-
-    // stop(){
-    //     this.locationTracker.stopTracking();
-    // }
 
     setDriver(){
         //if local storage has remember me token and remember me token is true, then get driver info from local storage
@@ -68,13 +64,22 @@ export class HomePage {
     getAssignedBus(){
         this.busInfoProvider.getAssignedBus()
         .subscribe(res => {
-            this.assignedBus = res.assigned_bus;
-            this.assignedRoute = this.assignedBus.routes;
-            this.bus_stop_arr = JSON.parse(this.assignedRoute.route_arr);
+            console.log(res);
+            if(res.assigned_bus){
+                this.assignedBus = res.assigned_bus;
+                this.assignedRoute = this.assignedBus.routes;
+                this.bus_stop_arr = JSON.parse(this.assignedRoute.route_arr);
 
-            //init first bus stop
-            this.locationTracker.setBusStopArr(this.bus_stop_arr);
-            this.updateBusStop();
+                this.route_name = this.assignedRoute.title;
+
+                console.log(this.assignedRoute);
+                //init first bus stop
+                this.locationTracker.setBusStopArr(this.bus_stop_arr);
+                this.updateBusStop();
+            }
+            else{
+                this.route_name = '[No assigned route yet]'
+            }
         });
     }
 

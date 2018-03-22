@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar color="Primary" style="text-align: center;">
+  <ion-navbar color="primary" style="text-align: center;">
     <ion-title>Others</ion-title>
   </ion-navbar>
 
@@ -15,26 +15,19 @@
 
 <ion-content padding>
     <ion-card>
-        <p>stops:</p>
-        <ul *ngFor="let route of routeArr">
-            <li>{{route.name}}</li>
-        </ul>
+        <ion-card-header text-center>
+            <p>Bus Stops:</p>
+        </ion-card-header>
+
+        <ion-card-content>
+            <section class="timeline">
+                <ul *ngFor="let route of routeArr">
+                    <li>
+                        <div>{{route.name}}</div>
+                    </li>
+                </ul>
+            </section>
+        </ion-card-content>
     </ion-card>
     <button ion-button block (click) = logout()>Logout</button>
-
-    <!-- <timeline endIcon="call">
-        <timeline-item *ngFor="let item of items">
-            <timeline-time [time]="item.time">
-            </timeline-time>
-            <ion-icon [name]="item.icon"></ion-icon>
-            <ion-card>
-                <ion-card-header>
-                    {{item.title}}
-                </ion-card-header>
-                <ion-card-header>
-                    {{item.content}}
-                </ion-card-header>
-            </ion-card>
-        </timeline-item>
-    </timeline> -->
 </ion-content>

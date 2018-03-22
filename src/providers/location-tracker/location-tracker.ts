@@ -21,16 +21,21 @@ export class LocationTrackerProvider {
     public bus_stop_arr:any;
     public nextStop: any;
 
+    public driver:any;
+
     constructor(
         public zone: NgZone,
         public backgroundGeolocation: BackgroundGeolocation,
         public geolocation: Geolocation,
         public http: Http,
-        private alertCtrl: AlertController
+        private alertCtrl: AlertController,
         ) {
         console.log('Hello LocationTrackerProvider Provider');
     }
 
+    setDriver(driver){
+        this.driver = driver;
+    }
     startTracking(){
         let config = {
             desiredAccuracy: 0,
@@ -90,36 +95,30 @@ export class LocationTrackerProvider {
         };
 
         let data = {
-            track_status : 'ON',
             bus_location : JSON.stringify(location),
             next_stop: JSON.stringify(this.nextStop)
         } //when send data using post request, the data variable must same as the datatable column name
 
-        console.log('data', data);
+        // console.log('data', data);
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         return new Promise(resolve => {
-            this.http.post('http://umshopin.com/umshopin_admin/api/bus/1/updateLocation', JSON.stringify(data), {headers: headers})
+            this.http.post('http://umshopin.com/umshopin_admin/api/bus/' + this.driver.id + '/updateLocation', JSON.stringify(data), {headers: headers})
             // .map(this.extractData)
             .subscribe(data => {
                 resolve(data);
                 console.log('succes: ' , data);
             }, (err) => {
                 resolve(true);
-                alert('failed: ' + err);
+                console.log('failed: ' + err);
                 window.location.reload();
             });
         })
     }
 
-    // private extractData(res: Response) {
-    //     return res.text() ? res.json() : {}; ;
-    // }
-    //
     stopUpdateLoc(){
         let data = {
-            track_status: 'OFF',
             bus_location : null,
             next_stop: null
         }
@@ -169,8 +168,8 @@ export class LocationTrackerProvider {
         console.log('next', nextStop);
         let isNear:boolean = false;
         let location = nextStop.location;
-        if(this.lat < location.lat + 0.0001 && this.lat > location.lat - 0.0001){
-            if(this.lng < location.lng + 0.0001 && this.lng > location.lng - 0.0001){
+        if(this.lat < location.lat + 0.0005 && this.lat > location.lat - 0.0005){
+            if(this.lng < location.lng + 0.0005 && this.lng > location.lng - 0.0005){
                 console.log('it is near!');
                 isNear = true;
                 let currentStop = nextStop;

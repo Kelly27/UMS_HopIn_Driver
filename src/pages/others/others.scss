@@ -3,4 +3,41 @@ page-others {
         margin-top: 10px;
         padding: 10px 15px;
     }
+
+    .timeline{
+        ul{
+            padding: 0px;
+            li{
+                list-style-type: none !important;
+                position: relative !important;
+                width: 3px !important;
+                margin-top: 0 !important;
+                margin-left: 50px !important;
+                // padding-top: 15px !important;
+                background-color: #00137F !important;
+                &:after{
+                    content: '';
+                    position: absolute;
+                    left: 50%;
+                    top: -17px;
+                    transform: translateX(-50%);
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background: #00137F;
+                }
+                div{
+                    width: 200px;
+                    position: relative;
+                    bottom: 15px;
+                    left: 25px;
+                }
+            }
+            &:last-child{
+                li{
+                    height: 0px !important;
+                }
+            }
+        }
+    }
 }
