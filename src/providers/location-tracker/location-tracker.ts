@@ -54,6 +54,7 @@ export class LocationTrackerProvider {
                 this.lat = location.latitude;
                 this.lng = location.longitude;
                 this.updateLocation();
+                this.nearBusStop(this.nextStop);
             });
         }, (err) => {
             console.log(err);

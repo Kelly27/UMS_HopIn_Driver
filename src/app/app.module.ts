@@ -23,6 +23,7 @@ import {
   TimelineItemComponent, 
   TimelineTimeComponent 
 } from '../components/timeline/timeline';
+import { ReportProvider } from '../providers/report/report';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import {
     BackgroundGeolocation,
     Geolocation,
     BusInfoProvider,
+    ReportProvider,
   ]
 })
 export class AppModule {}

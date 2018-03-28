@@ -40,4 +40,16 @@ page-others {
             }
         }
     }
+
+    #custom_label{
+        background: url('../assets/imgs/background.jpg');
+        background-size: 100%;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        box-shadow: 1px 1px 9px #9a9a9a;
+        border-radius: 5px;
+        font-weight: bold;
+        background-position-y: -15px;
+    }
 }
