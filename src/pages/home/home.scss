@@ -24,4 +24,23 @@ page-home {
         margin: auto;
         margin-top: -10px !important;
     }
+
+    .label{
+        color: white;
+        font-weight: bold;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+        width: 35%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .yes_{
+        background-color: #32db64;
+    }
+
+    .not_{
+        background-color: #f53d3d;
+    }
 }

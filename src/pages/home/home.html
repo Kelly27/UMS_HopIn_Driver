@@ -20,6 +20,8 @@
 <!--         <p style="font-size: 10px !important;">Current Latitude: {{locationTracker.lat}}</p>
         <p style="font-size: 10px !important;">Current Longitude: {{locationTracker.lng}}</p> -->
         <p>Start Tracking:</p>
+        <div class="label yes_" *ngIf="trackingToggle">Tracking</div>
+        <div class="label not_" *ngIf="!trackingToggle">Not Tracking</div>
         <ion-toggle class="tracking-toggle" text-center [(ngModel)]="trackingToggle" color="secondary" (ionChange)="checkTrackingSwitch()"></ion-toggle>
     </ion-card>
 
@@ -30,6 +32,8 @@
 
     <ion-card text-center>
         <p>Bus Condition: </p>
-        <ion-toggle class="tracking-toggle" disabled = "{{disableIsFull}}" text-center [(ngModel)]="busIsFullToggle" color="danger" (ionChange)="busIsFullSwitch()"></ion-toggle>
+        <div class="label yes_" *ngIf="!busIsFullToggle">Not Full Yet</div>
+        <div class="label not_" *ngIf="busIsFullToggle">FULL</div>
+        <ion-toggle class="tracking-toggle" disabled = "{{disableIsFull}}" ng-true-value="Yes" text-center [(ngModel)]="busIsFullToggle" color="danger" (ionChange)="busIsFullSwitch()"></ion-toggle>
     </ion-card>
 </ion-content>

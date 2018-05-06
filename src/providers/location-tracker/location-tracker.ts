@@ -37,7 +37,7 @@ export class LocationTrackerProvider {
     setDriver(driver){
         this.driver = driver;
     }
-    startTracking(){
+    startTracking(assignedBus){
         let config = {
             desiredAccuracy: 0,
             stationaryRadius: 20,
@@ -53,7 +53,7 @@ export class LocationTrackerProvider {
             this.zone.run(() => {
                 this.lat = location.latitude;
                 this.lng = location.longitude;
-                this.updateLocation();
+                this.updateLocation(assignedBus);
                 this.nearBusStop(this.nextStop);
             });
         }, (err) => {
@@ -76,7 +76,7 @@ export class LocationTrackerProvider {
             this.zone.run(() => {
                 this.lat = position.coords.latitude;
                 this.lng = position.coords.longitude;
-                this.updateLocation();
+                this.updateLocation(assignedBus);
                 this.nearBusStop(this.nextStop);
             });
         });
@@ -91,7 +91,8 @@ export class LocationTrackerProvider {
         this.watch.unsubscribe();
     }
 
-    updateLocation(){
+    updateLocation(assignedBus){
+        console.log(this.driver);
         let location = {
             lat: this.lat,
             lng: this.lng
@@ -108,15 +109,15 @@ export class LocationTrackerProvider {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         return new Promise(resolve => {
-            this.http.post('http://umshopin.com/umshopin_admin/api/bus/' + this.driver.id + '/updateLocation', JSON.stringify(data), {headers: headers})
+            this.http.post('http://umshopin.com/umshopin_admin/api/bus/' + assignedBus + '/updateLocation', JSON.stringify(data), {headers: headers})
             // .map(this.extractData)
             .subscribe(data => {
                 resolve(data);
                 console.log('succes: ' , data);
             }, (err) => {
                 resolve(true);
-                console.log('failed: ' + err);
-                window.location.reload();
+                console.log('failed: ' + err, data);
+                // window.location.reload();
             });
         })
     }

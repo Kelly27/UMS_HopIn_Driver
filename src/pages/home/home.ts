@@ -45,7 +45,7 @@ export class HomePage {
 
     checkTrackingSwitch(){
         if(this.trackingToggle == true ){
-            this.locationTracker.startTracking();
+            this.locationTracker.startTracking(this.assignedBus.id);
             this.disableIsFull = false;
         }
         else{
