@@ -54,7 +54,7 @@ export class LocationTrackerProvider {
                 this.lat = location.latitude;
                 this.lng = location.longitude;
                 this.updateLocation(assignedBus);
-                this.nearBusStop(this.nextStop);
+                this.nearBusStop(this.nextStop, assignedBus);
             });
         }, (err) => {
             console.log(err);
@@ -77,16 +77,16 @@ export class LocationTrackerProvider {
                 this.lat = position.coords.latitude;
                 this.lng = position.coords.longitude;
                 this.updateLocation(assignedBus);
-                this.nearBusStop(this.nextStop);
+                this.nearBusStop(this.nextStop, assignedBus);
             });
         });
     }
 
-    stopTracking(){
+    stopTracking(assignedBus){
         console.log('stopTracking');
 
         this.isFull = false;
-        this.stopUpdateLoc();
+        this.stopUpdateLoc(assignedBus);
         this.backgroundGeolocation.finish();
         this.watch.unsubscribe();
     }
@@ -122,7 +122,7 @@ export class LocationTrackerProvider {
         })
     }
 
-    stopUpdateLoc(){
+    stopUpdateLoc(assignedBus){
         let data = {
             bus_location : null,
             next_stop: null,
@@ -135,7 +135,7 @@ export class LocationTrackerProvider {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         return new Promise(resolve => {
-            this.http.post('http://umshopin.com/umshopin_admin/api/bus/1/updateLocation', JSON.stringify(data), {headers: headers})
+            this.http.post('http://umshopin.com/umshopin_admin/api/bus/' + assignedBus + '/updateLocation', JSON.stringify(data), {headers: headers})
             .subscribe(data => {
                 resolve(data);
                 console.log('success', data);
@@ -152,15 +152,15 @@ export class LocationTrackerProvider {
         this.nextStop = this.bus_stop_arr[0];
     }
 
-    setNextStop(currentStop){
+    setNextStop(currentStop, assignedBus){
         let i = this.bus_stop_arr.indexOf(currentStop);
         console.log(i);
         if(this.bus_stop_arr[i + 1]){
             this.nextStop = this.bus_stop_arr[i + 1];
         }
         else{
-            this.stopTracking(); //pause tracking
-            this.presentEndRouteAlert();
+            this.stopTracking(assignedBus); //pause tracking
+            this.presentEndRouteAlert(assignedBus);
             console.log('end of route');
 
         }
@@ -170,7 +170,7 @@ export class LocationTrackerProvider {
         this.nextStop = stop;
     }
 
-    nearBusStop(nextStop){
+    nearBusStop(nextStop, assignedBus){
         console.log('next', nextStop);
         let isNear:boolean = false;
         let location = nextStop.location;
@@ -179,7 +179,7 @@ export class LocationTrackerProvider {
                 console.log('it is near!');
                 isNear = true;
                 let currentStop = nextStop;
-                this.setNextStop(currentStop);
+                this.setNextStop(currentStop, assignedBus);
             }
             else{
                 console.log('lng not reach yet', this.lng);
@@ -191,7 +191,7 @@ export class LocationTrackerProvider {
         }
     }
 
-    presentEndRouteAlert(){
+    presentEndRouteAlert(assignedBus){
         let alert = this.alertCtrl.create({
             title: 'End of Route',
             message: "You have reached the last bus stop on this route. Do you want to stop sending your location to the server?",
@@ -200,13 +200,13 @@ export class LocationTrackerProvider {
                     text: 'Cancel',
                     role: 'cancel',
                     handler: () => {
-                        this.startTracking();
+                        // this.startTracking();
                     }
                 },
                 {
                     text: 'OK',
                     handler: () => {
-                        this.stopTracking();
+                        this.stopTracking(assignedBus);
                     }
                 }
             ]

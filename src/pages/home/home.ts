@@ -49,7 +49,7 @@ export class HomePage {
             this.disableIsFull = false;
         }
         else{
-            this.locationTracker.stopTracking();
+            this.locationTracker.stopTracking(this.assignedBus.id);
             this.disableIsFull = true;
             this.locationTracker.isFull = false
         }
