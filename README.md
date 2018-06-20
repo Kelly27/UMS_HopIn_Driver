@@ -1,5 +1,6 @@
 # UMS_HopIn_Driver
 This is an Ionic framework project. Hence you need to have Cordova installed in your computer.
+For git repository, go to https://github.com/Kelly27/UMS_HopIn_Driver
 
 ## Getting started
 1. Run command 'npm install'. (For this you need to have NodeJS installed in your computer)
